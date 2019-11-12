@@ -1,0 +1,7 @@
+True.
+
+Assume there is a stable matching S where m is paired with w' != w and w is paired with m' != m.
+
+Since by definition m prefers w over w' and w prefers m over m', we have an instability. This is a contradiction because we assumed S to be stable.
+
+Therefore, such S cannot exist.
