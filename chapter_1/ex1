@@ -1,0 +1,15 @@
+False
+
+Let m1, m2 be men and w1, w2 be women with the following preferences list:
+
+m1 -> [w1, w2]
+m2 -> [w2, w1]
+w1 -> [m2, m1]
+w2 -> [m1, m2]
+
+We have two possible matches:
+
+M1 = [(m1, w1), (m2, w2)]
+M2 = [(m1, w2), (m2, w1)]
+
+In M1, neither woman gets her preferred man. In M2, neither man gets his preferred woman.
