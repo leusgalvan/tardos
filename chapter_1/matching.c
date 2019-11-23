@@ -1,33 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "matching.h"
 
-int* findMatching(int, int**, int**);
 int prefers(int*, int, int, int);
 int findFreeMan(int, int*, int**);
 int findHighestRankedUnproposedWoman(int*, int*, int);
-
-int main() {
-    int n = 5;
-    int** menPrefs = (int**) malloc(sizeof(int*) * n);
-    int** womenPrefs = (int**) malloc(sizeof(int*) * n);
-
-    for(int i = 0; i < n; i++) {
-        menPrefs[i] = (int*) malloc(sizeof(int) * n);
-        womenPrefs[i] = (int*) malloc(sizeof(int) * n);
-        for(int j = 0; j < n; j++) {
-            menPrefs[i][j] = j;
-            womenPrefs[i][j] = n-j-1;
-        }
-    }
-
-    int* match = findMatching(n, menPrefs, womenPrefs);
-
-    for(int k = 0; k < n; k++) printf("%d ", match[k]);
-    printf("\n");
-    return 0;
-}
+void _printArray(int*, int, int);
+void printArray(int**, int, char*);
 
 int* findMatching(int n, int** menPreferences, int** womenPreferences) {
+    printf("Finding stable matching\n");
+    printArray(menPreferences, n, "Men preferences");
+    printArray(womenPreferences, n, "Women preferences");
     int** menProposals = (int**) malloc(sizeof(int*) * n);
     int* menMatching = (int*) malloc(sizeof(int) * n);
     int* womenMatching = (int*) malloc(sizeof(int) * n);
@@ -86,4 +70,22 @@ int findFreeMan(int n, int* menMatching, int** menProposals) {
         }
     }
     return -1;
+}
+
+void _printArray(int *a, int n, int pos) {
+    printf("  %d: [", pos);
+    if(n > 0) printf("%d", a[0]);
+    for(int i = 1; i < n; i++) {
+        printf(", %d", a[i]);
+    }
+    printf("]");
+}
+void printArray(int** a, int n, char* name) {
+    printf("%s: [\n", name);
+    if(n > 0) _printArray(a[0], n, 0);
+    for(int i = 1; i < n; i++) {
+        printf("\n");
+        _printArray(a[i], n, i);
+    }
+    printf("\n]\n");
 }
