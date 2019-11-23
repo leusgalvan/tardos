@@ -1,0 +1,39 @@
+No, there is not always a stable pair of schedules.
+
+Consider a network A with shows of ratings 20 and 30 and a network B with shows of ratings 25 and 35.
+For simplicity assume that a show is represented purely by its rating.
+We have two slots to fill, and each network can fill it in two differente ways, i.e. it has two possible schedules.
+Therefore, there are four possible pairs of schedules. Lets show that each one of them has an instability.
+
+Attempt 1:
+
+Time slot  A   B
+   0       20  25
+   1       30  35
+
+Here A is losing both slots. However, by swapping shows (putting 20 in slot 1 and 30 in slot 0), it wins the first slot,
+so there is an instability.
+
+Attempt 2:
+
+Time slot  A   B
+   0       30  25
+   1       20  35
+
+Here B is losing the first slot and winning the second one. However, by swapping shows, it can win both.
+
+Attempt 3:
+
+Time slot  A   B
+   0       20  35
+   1       30  25
+
+Here B is winning the first slot and losing the second one. However, by swapping shows, it can win both.
+
+Attempt 4:
+
+Time slot  A   B
+   0       30  35
+   1       20  25
+
+Here A is losing both slots. However, by swapping shows, it can win the second slot.
