@@ -11,5 +11,6 @@ typedef struct {
 graph g_create(int n);
 void g_add_edge(graph g, int v, int w);
 void g_print(graph g);
+linked_list *get_neighbors(graph g, int v);
 
 #endif // GRAPH_H

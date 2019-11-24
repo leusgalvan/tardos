@@ -36,6 +36,10 @@ void g_print(graph g) {
     printf("]\n");
 }
 
+linked_list *get_neighbors(graph g, int v) {
+    return g.adj[v];
+}
+
 void _ensure_order(int *v, int *w) {
     if(*v > *w) {
         int temp = *v;
