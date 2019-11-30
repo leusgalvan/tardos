@@ -24,6 +24,8 @@ int dll_remove(doubly_linked_list *l, void *elem);
 void dll_print(doubly_linked_list *l, char *(*toStr)(void*));
 void dll_println(doubly_linked_list *l, char *(*toStr)(void*));
 void dll_free(doubly_linked_list *l);
+void dll_concat(doubly_linked_list *l1, doubly_linked_list *l2);
+doubly_linked_list *dll_copy(doubly_linked_list *l);
 
 #endif // DOUBLY_LINKED_LIST_H
 

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "doubly_linked_list.h"
+#include "utils.h"
 
 void _assert(int cond, char *msg);
 void test_create_empty_list();
@@ -22,6 +23,8 @@ void test_remove_found();
 void test_remove_not_found();
 void test_print();
 void test_free();
+void test_concat();
+void test_copy();
 
 int main() {
     test_create_empty_list();
@@ -43,20 +46,10 @@ int main() {
     test_remove_not_found();
     test_print();
     test_free();
+    test_concat();
+    test_copy();
 
     return 0;
-}
-
-int cmp_ints(void *v1, void *v2) {
-    int x = *((int*) v1);
-    int y = *((int*) v2);
-    return x < y? -1: x > y? 1: 0;
-}
-
-char *intToStr(void *elem) {
-    char *s = malloc(sizeof(char) * 16);
-    int i = *((int*)elem);
-    return itoa(i, s, 10);
 }
 
 void test_create_empty_list() {
@@ -227,6 +220,44 @@ void test_free() {
     for(int i = 0; i < 5; i++) dll_push(l, &values[i]);
     dll_free(l);
     _assert(1, "Freeing the list should work");
+}
+
+void test_concat() {
+    doubly_linked_list *l = dll_create(cmp_ints);
+    int values[] = {1, 2, 3, 4, 5};
+    for(int i = 0; i < 5; i++) dll_append(l, &values[i]);
+
+    doubly_linked_list *l2 = dll_create(cmp_ints);
+    int values2[] = {6, 7, 8, 9, 10};
+    for(int i = 0; i < 5; i++) dll_append(l2, &values2[i]);
+
+    dll_concat(l, l2);
+    int result[10];
+    int result_size = dll_size(l);
+    for(int i = 0; i < 10; i++) {
+        result[i] = *((int*)dll_pop(l));
+    }
+    int expected_result[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    _assert(result_size == 10, "Concat yields list with size equal to the sum of sizes");
+    _assert(cmp_arrays(result, expected_result, 10) == 0, 
+            "Concat appends all elements from the second list to the first one");
+}
+
+void test_copy() {
+    doubly_linked_list *l = dll_create(cmp_ints);
+    int values[] = {1, 2, 3, 4, 5};
+    for(int i = 0; i < 5; i++) dll_push(l, &values[i]);
+
+    doubly_linked_list *l2 = dll_copy(l);
+    int result_size = dll_size(l2);
+    int a1[5], a2[5];
+    for(int i = 0; i < 5; i++) {
+        a1[i] = *((int*)dll_pop(l));
+        a2[i] = *((int*)dll_pop(l2));
+    }
+    
+    _assert(result_size == 5, "Copy yields a list with the same size");
+    _assert(cmp_arrays(a1, a2, 5) == 0, "Copy yields a list with the same elements");
 }
 
 void _assert(int cond, char *msg) {

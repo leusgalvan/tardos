@@ -106,4 +106,24 @@ void dll_free(doubly_linked_list *l) {
     free(l);
 }
 
+void dll_concat(doubly_linked_list *l, doubly_linked_list *l2) {
+    if(l->size == 0) {
+        *l = *l2;
+        return;
+    }
+
+    l->size += (l2->size);
+
+    l->last->next = l2->first;
+    l2->first->prev = l->last;
+    l->last = l2->last;
+}
+
+doubly_linked_list *dll_copy(doubly_linked_list *l) {
+    doubly_linked_list *ret = malloc(sizeof(doubly_linked_list));
+    for(node *n = l->first; n != NULL; n = n->next) {
+        dll_append(ret, n->val);
+    }
+    return ret;
+}
 
