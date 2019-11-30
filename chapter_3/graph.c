@@ -1,43 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "graph.h"
-#include "../chapter_2/linked_list.h"
+#include "doubly_linked_list.h"
+#include "utils.h"
 
 void _ensure_order(int *v, int *w);
 
-graph g_create(int n) {
-    graph g;
-    g.n = n;
-    g.adj = malloc(sizeof(linked_list*) * n);
+graph *g_create(int n) {
+    graph *g = malloc(sizeof(graph));
+    g->n = n;
+    g->adj = malloc(sizeof(doubly_linked_list*) * n);
     for(int i = 0; i < n; i++) {
-        g.adj[i] = ll_create();
+        g->adj[i] = dll_create(cmp_ints);
     }
     return g;
 }
 
-void g_add_edge(graph g, int v, int w) {
-    _ensure_order(&v, &w);
+void g_add_edge(graph *g, int v, int w) {
     int *p = malloc(sizeof(int));
     *p = w;
-    ll_push(g.adj[v], p);
+    int *q = malloc(sizeof(int));
+    *q = v;
+    dll_push(g->adj[v], p);
+    dll_push(g->adj[w], q);
 }
 
-void g_print(graph g) {
-    printf("n: %d\n", g.n);
+void g_print(graph *g) {
+    printf("n: %d\n", g->n);
     printf("adj: [\n");
-    if(g.n > 0) {
+    if(g->n > 0) {
         printf("  0: ");
-        ll_print(g.adj[0]);
-        for(int i = 1; i < g.n; i++) {
+        dll_println(g->adj[0], intToStr);
+        for(int i = 1; i < g->n; i++) {
             printf("  %d: ", i);
-            ll_print(g.adj[i]);
+            dll_println(g->adj[i], intToStr);
         }
     }
     printf("]\n");
 }
 
-linked_list *get_neighbors(graph g, int v) {
-    return g.adj[v];
+doubly_linked_list *get_neighbors(graph *g, int v) {
+    return g->adj[v];
 }
 
 void _ensure_order(int *v, int *w) {
@@ -47,3 +50,4 @@ void _ensure_order(int *v, int *w) {
         *w = temp;
     }
 }
+

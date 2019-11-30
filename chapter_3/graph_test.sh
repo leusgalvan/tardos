@@ -1,5 +1,5 @@
 # Compile
-gcc -Wall graph_test.c graph.c ../chapter_2/linked_list.c -o graph_test
+gcc -Wall graph_test.c graph.c doubly_linked_list.c utils.c -o graph_test
 
 # Run
 ./graph_test
