@@ -5,8 +5,29 @@
 #include "doubly_linked_list.h"
 #include "utils.h"
 
+graph *make_graph(int n);
+
 int main() {
     int n = 8;
+    graph *g = make_graph(n);
+
+    printf("Graph:\n");
+    g_print(g);
+
+    graph *t = g_bfs_tree(g);
+    printf("BFS Tree:\n");
+    g_print(t);
+
+    g = make_graph(n);
+    doubly_linked_list **paths = g_bfs_paths(g);
+    printf("BFS Paths:\n");
+    for(int i = 0; i < n; i++) {
+        dll_println(paths[i], intToStr);
+    }
+    return 0;
+}
+
+graph *make_graph(int n) {
     graph *g = g_create(n);
     g_add_edge(g, 0, 1);
     g_add_edge(g, 0, 2);
@@ -19,18 +40,5 @@ int main() {
     g_add_edge(g, 2, 7);
     g_add_edge(g, 4, 5);
     g_add_edge(g, 6, 7);
-
-    printf("Grah:\n");
-    g_print(g);
-
-    graph *t = g_bfs_tree(g);
-    printf("BFS Tree:\n");
-    g_print(t);
-
-    doubly_linked_list **paths = g_bfs_paths(g);
-    printf("BFS Paths:\n");
-    for(int i = 0; i < n; i++) {
-        dll_println(paths[i], intToStr);
-    }
-    return 0;
+    return g;
 }
