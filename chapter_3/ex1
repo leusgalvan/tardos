@@ -1,0 +1,40 @@
+To find top ords we need to choose nodes with no incoming edges.
+
+I'll use indentation to indicate which node is selected at each iteration.
+First iteration is not indented, second is 1-space indented, third is 2-space
+indented and so on.
+
+a
+-b
+--d
+---c
+----e
+-----f
+---e
+----c
+-----f
+--c
+---d
+----e
+-----f
+-d
+--e
+---b
+----c
+-----f
+--b
+---c
+----e
+-----f
+---e
+----c
+-----f
+
+Therefore we have the following 6 orderings:
+
+abdcef
+abdecf
+abcdef
+adebcf
+adbcef
+adbecf
