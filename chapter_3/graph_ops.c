@@ -5,17 +5,17 @@
 #include "doubly_linked_list.h"
 #include "utils.h"
 
-graph *g_bfs_tree(graph *g) {
+graph *g_bfs_tree(graph *g, int v0) {
     if(g->n == 0) return NULL;
 
     graph *t = g_create(g->n);
     int visited[g->n];
     for(int i = 0; i < g->n; i++) visited[i] = 0;
-    visited[0] = 1;
+    visited[v0] = 1;
 
     doubly_linked_list *queue = dll_create(cmp_ints);
     int *p = malloc(sizeof(int));
-    *p = 0;
+    *p = v0;
     dll_append(queue, p);
     
     int root, current_neighbor, *q;
@@ -37,7 +37,7 @@ graph *g_bfs_tree(graph *g) {
     return t;
 }
 
-doubly_linked_list **g_bfs_paths(graph *g) {
+doubly_linked_list **g_bfs_paths(graph *g, int v0) {
     if(g->n == 0) return NULL;
 
     doubly_linked_list **paths = malloc(sizeof(doubly_linked_list*) * g->n);
@@ -48,9 +48,9 @@ doubly_linked_list **g_bfs_paths(graph *g) {
     }
     doubly_linked_list *queue = dll_create(cmp_ints);
     int *p = malloc(sizeof(int));
-    *p = 0;
+    *p = v0;
     dll_append(queue, p);
-    visited[0] = 1;
+    visited[v0] = 1;
     int root, current_neighbor, *q;
     doubly_linked_list *neighbors;
     while(!dll_is_empty(queue)) {
@@ -70,5 +70,48 @@ doubly_linked_list **g_bfs_paths(graph *g) {
         }
     }
     return paths;
+}
+
+doubly_linked_list *g_find_path(graph *g, int v, int w) {
+    if(g->n == 0) return NULL;
+    doubly_linked_list *path = dll_create(cmp_ints);
+    int visited[g->n];
+    int parent[g->n];
+    for(int i = 0; i < g->n; i++) {
+        visited[i] = 0;
+        parent[i] = -1;
+    }
+    doubly_linked_list *queue = dll_create(cmp_ints);
+    int *p = malloc(sizeof(int));
+    *p = v;
+    dll_append(queue, p);
+    visited[v] = 1;
+    doubly_linked_list *neighbors;
+    int current_neighbor;
+    while(!dll_is_empty(queue)) {
+        v = *((int*)dll_pop(queue));
+        neighbors = get_neighbors(g, v);
+        while(!dll_is_empty(neighbors)) {
+            current_neighbor = *((int*)dll_pop(neighbors));
+            if(current_neighbor == w) {
+                parent[current_neighbor] = v;
+                do {
+                    p = malloc(sizeof(int));
+                    *p = w;
+                    dll_push(path, p);
+                    w = parent[w];
+                } while(w != -1);
+                return path;
+            }
+            if(!visited[current_neighbor]) {
+                visited[current_neighbor] = 1;
+                p = malloc(sizeof(int));
+                *p = current_neighbor;
+                dll_append(queue, p);
+                parent[current_neighbor] = v;
+            }
+        }
+    }
+    return NULL;
 }
 

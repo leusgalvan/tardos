@@ -14,16 +14,21 @@ int main() {
     printf("Graph:\n");
     g_print(g);
 
-    graph *t = g_bfs_tree(g);
+    graph *t = g_bfs_tree(g, 1);
     printf("BFS Tree:\n");
     g_print(t);
 
     g = make_graph(n);
-    doubly_linked_list **paths = g_bfs_paths(g);
+    doubly_linked_list **paths = g_bfs_paths(g, 1);
     printf("BFS Paths:\n");
     for(int i = 0; i < n; i++) {
         dll_println(paths[i], intToStr);
     }
+
+    g = make_graph(n);
+    doubly_linked_list *path = g_find_path(g, 1, 0);
+    printf("Path between 1 and 0: ");
+    dll_println(path, intToStr);
     return 0;
 }
 
