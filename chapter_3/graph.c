@@ -4,8 +4,6 @@
 #include "doubly_linked_list.h"
 #include "utils.h"
 
-void _ensure_order(int *v, int *w);
-
 graph *g_create(int n) {
     graph *g = malloc(sizeof(graph));
     g->n = n;
@@ -43,11 +41,22 @@ doubly_linked_list *get_neighbors(graph *g, int v) {
     return g->adj[v];
 }
 
-void _ensure_order(int *v, int *w) {
-    if(*v > *w) {
-        int temp = *v;
-        *v = *w;
-        *w = temp;
+void g_remove_edge(graph *g, int v, int w) {
+    int *p = malloc(sizeof(int));
+    *p = w;
+    dll_remove(g->adj[v], p);
+    *p = v;
+    dll_remove(g->adj[w], p);
+    free(p);
+}
+
+graph *g_copy(graph *g) {
+    graph *ret = malloc(sizeof(graph));
+    ret->n = g->n;
+    ret->adj = malloc(sizeof(doubly_linked_list*) * g->n);
+    for(int i = 0; i < g->n; i++) {
+        ret->adj[i] = dll_copy(g->adj[i]);
     }
+    return ret;
 }
 

@@ -13,6 +13,10 @@ int main() {
 
     printf("\nNeighbors of node 0: ");
     dll_println(get_neighbors(g, 0), intToStr);    
+
+    graph *copy = g_copy(g);
+    g_print(copy);
+
     return 0;
 }
 
