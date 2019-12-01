@@ -120,9 +120,11 @@ void dll_concat(doubly_linked_list *l, doubly_linked_list *l2) {
 }
 
 doubly_linked_list *dll_copy(doubly_linked_list *l) {
-    doubly_linked_list *ret = malloc(sizeof(doubly_linked_list));
-    for(node *n = l->first; n != NULL; n = n->next) {
-        dll_append(ret, n->val);
+    doubly_linked_list *ret = dll_create(l->cmp);
+    if(l->size > 0) {
+        for(node *n = l->first; n != NULL; n = n->next) {
+            dll_append(ret, n->val);
+        }
     }
     return ret;
 }
