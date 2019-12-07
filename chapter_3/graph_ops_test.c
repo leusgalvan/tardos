@@ -22,13 +22,13 @@ int main() {
     doubly_linked_list **paths = g_bfs_paths(g, 1);
     printf("BFS Paths:\n");
     for(int i = 0; i < n; i++) {
-        dll_println(paths[i], intToStr);
+        dll_println(paths[i]);
     }
 
     g = make_graph(n);
     doubly_linked_list *path = g_find_path(g, 1, 0);
     printf("Path between 1 and 0: ");
-    dll_println(path, intToStr);
+    dll_println(path);
     return 0;
 }
 

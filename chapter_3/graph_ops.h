@@ -7,6 +7,7 @@
 graph *g_bfs_tree(graph *g, int v0);
 doubly_linked_list **g_bfs_paths(graph *g, int v0);
 doubly_linked_list *g_find_path(graph *g, int v, int w);
+doubly_linked_list *g_find_cycle(graph *g);
 
 #endif // GRAPH_OPS_H
 

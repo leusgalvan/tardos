@@ -12,7 +12,7 @@ int main() {
     g_print(g);
 
     printf("\nNeighbors of node 0: ");
-    dll_println(get_neighbors(g, 0), intToStr);    
+    dll_println(get_neighbors(g, 0));    
 
     graph *copy = g_copy(g);
     g_print(copy);

@@ -12,7 +12,7 @@ int main() {
     dag_print(g);
 
     printf("\nNeighbors of node 0: ");
-    dll_println(dag_get_neighbors(g, 0), intToStr);    
+    dll_println(dag_get_neighbors(g, 0));    
     return 0;
 }
 

@@ -9,18 +9,14 @@ graph *g_create(int n) {
     g->n = n;
     g->adj = malloc(sizeof(doubly_linked_list*) * n);
     for(int i = 0; i < n; i++) {
-        g->adj[i] = dll_create(cmp_ints);
+        g->adj[i] = dll_create();
     }
     return g;
 }
 
 void g_add_edge(graph *g, int v, int w) {
-    int *p = malloc(sizeof(int));
-    *p = w;
-    int *q = malloc(sizeof(int));
-    *q = v;
-    dll_push(g->adj[v], p);
-    dll_push(g->adj[w], q);
+    dll_push(g->adj[v], w);
+    dll_push(g->adj[w], v);
 }
 
 void g_print(graph *g) {
@@ -28,10 +24,10 @@ void g_print(graph *g) {
     printf("adj: [\n");
     if(g->n > 0) {
         printf("  0: ");
-        dll_println(g->adj[0], intToStr);
+        dll_println(g->adj[0]);
         for(int i = 1; i < g->n; i++) {
             printf("  %d: ", i);
-            dll_println(g->adj[i], intToStr);
+            dll_println(g->adj[i]);
         }
     }
     printf("]\n");
@@ -42,12 +38,8 @@ doubly_linked_list *get_neighbors(graph *g, int v) {
 }
 
 void g_remove_edge(graph *g, int v, int w) {
-    int *p = malloc(sizeof(int));
-    *p = w;
-    dll_remove(g->adj[v], p);
-    *p = v;
-    dll_remove(g->adj[w], p);
-    free(p);
+    dll_remove(g->adj[v], w);
+    dll_remove(g->adj[w], v);
 }
 
 graph *g_copy(graph *g) {
